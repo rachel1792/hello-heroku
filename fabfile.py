@@ -10,7 +10,7 @@ from fabric.state import env as fab_env
 
 @task()
 def shell():
-    """Run the Olympus shell given previously loaded config"""
+    """Run the shell given previously loaded config"""
     if fab_env['environment'] is None:
         print(green('Please specify a target environment for your shell'))
         print(blue('fab $env shell'))
