@@ -29,6 +29,13 @@ def test():
     _set_current_environment('test')
 
 
+def environment():
+    """Bootstrap the environment."""
+    local('mkdir -p logs')
+    print green('\nInstalling requirements')
+    local('pip install -r requirements.txt')
+    # local('python setup.py develop')
+
 
 @task()
 def shell():
