@@ -61,19 +61,19 @@ def lint():
     print green('Checking for lints')
     return local('flake8').succeeded
 
-
-@task
-def db():
-    """Connect to the database."""
-    from xword.utils.configuration import config
-    local(
-        'psql -h {} -p {} --username {} {}'.format(
-            config.get('database.host'),
-            config.get('database.port'),
-            config.get('database.user'),
-            config.get('database.name'),
-        ),
-    )
+#
+# @task
+# def db():
+#     """Connect to the database."""
+#     from xword.utils.configuration import config
+#     local(
+#         'psql -h {} -p {} --username {} {}'.format(
+#             config.get('database.host'),
+#             config.get('database.port'),
+#             config.get('database.user'),
+#             config.get('database.name'),
+#         ),
+#     )
 
 
 @task
