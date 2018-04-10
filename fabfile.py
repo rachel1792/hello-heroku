@@ -16,7 +16,7 @@ def _set_current_environment(env):
     print('setting Fabric environment to {}'.format(env))
     fab_env['environment'] = env
 
-    print('setting Olympus config to {}'.format(fab_env['environment']))
+    print('setting xword config to {}'.format(fab_env['environment']))
     os.environ['CONFIG_ENV'] = './config/{}.yaml'.format(fab_env['environment'])
 
     print('clear local GCE cache')
