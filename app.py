@@ -12,18 +12,10 @@ db = SQLAlchemy(app)
 # from models import Xwords
 
 
-def index():
-    errors = []
-    results = {}
-    if request.method == "POST":
-        # get url that the user has entered
-        try:
-            print('thanks for the request!')
-        except Exception:
-            errors.append(
-                "Unable to get URL. Please make sure it's valid and try again."
-            )
-    return render_template('index.html', errors=errors, results=results)
+@app.route('/')
+def hello():
+    return "Hello World!"
+
 
 if __name__ == '__main__':
     app.run()
