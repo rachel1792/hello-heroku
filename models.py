@@ -4,6 +4,8 @@ from uuid import uuid4
 
 from app import db
 
+# TODO: Add updated at column
+
 
 class Xwords(db.Model):
     __tablename__ = 'xwords'
@@ -18,7 +20,6 @@ class Xwords(db.Model):
     clue = sa.Column(sa.String(150), nullable=False)
     answer = sa.Column(sa.String(30), nullable=False)
     debut = sa.Column(sa.Boolean(), default=sa.false(), server_default=sa.false())
-    unique = sa.Column(sa.Boolean(), default=sa.false(), server_default=sa.false())
 
     def __repr__(self):
         return '<clue: {}, answer: {}>'.format(self.clue, self.answer)

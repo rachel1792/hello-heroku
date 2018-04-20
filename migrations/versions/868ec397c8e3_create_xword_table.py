@@ -1,7 +1,7 @@
 """create xword tables.
 
 Revision ID: 868ec397c8e3
-Revises: 
+Revises:
 Create Date: 2018-04-09 20:02:37.447476
 
 """
@@ -28,14 +28,19 @@ def upgrade():
         sa.Column('clue', sa.String(length=150), nullable=False),
         sa.Column('answer', sa.String(length=30), nullable=False),
         sa.Column('debut', sa.Boolean(), server_default=sa.text(u'false'), nullable=True),
-        sa.Column('unique', sa.Boolean(), server_default=sa.text(u'false'), nullable=True),
         sa.PrimaryKeyConstraint('id')
     )
 
     op.create_table(
         'sunday_titles',
+        sa.Column('id', postgresql.UUID(), nullable=False),
+        sa.Column(
+            'created_at', sa.TIMESTAMP(timezone=True),
+            server_default=sa.text(u'now()'), nullable=False
+        ),
         sa.Column('title', sa.String(length=150), nullable=False),
-        sa.Column('date', sa.Date(), nullable=False)
+        sa.Column('date', sa.Date(), nullable=False),
+        sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 
