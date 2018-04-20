@@ -21,9 +21,6 @@ def do_job():
     pass
 
 
-q.enqueue_call(func=do_job, result_ttl=5000)
-
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     errors = []
