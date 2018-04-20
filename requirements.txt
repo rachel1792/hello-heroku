@@ -69,7 +69,9 @@ python-nvd3==0.14.2
 python-slugify==1.1.4
 pytz==2018.3
 PyYAML==3.12
+redis==2.10.6
 requests==2.18.4
+rq==0.10.0
 setproctitle==1.1.10
 six==1.11.0
 smmap2==2.0.3
