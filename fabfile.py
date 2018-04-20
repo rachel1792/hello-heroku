@@ -37,17 +37,6 @@ def environment():
     # local('python setup.py develop')
 
 
-@task()
-def shell():
-    """Run the shell given previously loaded config"""
-    if fab_env['environment'] is None:
-        print(green('Please specify a target environment for your shell'))
-        print(blue('fab $env shell'))
-        sys.exit()
-
-    local("python manage.py shell")
-
-
 @task
 def clean():
     """Remove all .pyc files."""
@@ -78,6 +67,7 @@ def lint():
 
 @task
 def migrate(command='upgrade head'):
+    """Database migration."""
     print green('Running migrations'.format(fab_env['environment']))
 
     # Migrate tables
@@ -93,3 +83,12 @@ def migrate(command='upgrade head'):
 def serve():
     """Start the server."""
     local('python app.py')
+
+
+@task()
+def shell():
+    """Run the shell."""
+    local('export APP_SETTINGS="config.DevelopmentConfig"')
+    local('export DATABASE_URL="postgresql://rachelkogan@localhost:5432/template1"')
+
+    local("python manage.py shell")

@@ -29,7 +29,7 @@ def index():
         # get url that the user has entered
         try:
             print('thanks for the submission!')
-        except:
+        except Exception:
             errors.append(
                 "Unable to get URL. Please make sure it's valid and try again."
             )

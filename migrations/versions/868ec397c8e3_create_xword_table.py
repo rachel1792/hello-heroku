@@ -1,4 +1,4 @@
-"""create xword table.
+"""create xword tables.
 
 Revision ID: 868ec397c8e3
 Revises: 
@@ -21,12 +21,21 @@ def upgrade():
     op.create_table(
         'xwords',
         sa.Column('id', postgresql.UUID(), nullable=False),
-        sa.Column('created_at', sa.TIMESTAMP(timezone=True), server_default=sa.text(u'now()'), nullable=False),
-        sa.Column('clue', sa.String(length=30), nullable=False),
-        sa.Column('answer', sa.String(length=150), nullable=False),
+        sa.Column(
+            'created_at', sa.TIMESTAMP(timezone=True),
+            server_default=sa.text(u'now()'), nullable=False
+        ),
+        sa.Column('clue', sa.String(length=150), nullable=False),
+        sa.Column('answer', sa.String(length=30), nullable=False),
         sa.Column('debut', sa.Boolean(), server_default=sa.text(u'false'), nullable=True),
         sa.Column('unique', sa.Boolean(), server_default=sa.text(u'false'), nullable=True),
         sa.PrimaryKeyConstraint('id')
+    )
+
+    op.create_table(
+        'sunday_titles',
+        sa.Column('title', sa.String(length=150), nullable=False),
+        sa.Column('date', sa.Date(), nullable=False)
     )
     # ### end Alembic commands ###
 

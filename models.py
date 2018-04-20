@@ -15,10 +15,19 @@ class Xwords(db.Model):
         default=sa.func.now(),
         nullable=False
     )
-    clue = sa.Column(sa.String(30), nullable=False)
-    answer = sa.Column(sa.String(150), nullable=False)
+    clue = sa.Column(sa.String(150), nullable=False)
+    answer = sa.Column(sa.String(30), nullable=False)
     debut = sa.Column(sa.Boolean(), default=sa.false(), server_default=sa.false())
     unique = sa.Column(sa.Boolean(), default=sa.false(), server_default=sa.false())
 
     def __repr__(self):
         return '<clue: {}, answer: {}>'.format(self.clue, self.answer)
+
+
+class SundayTitles(db.Model):
+    __tablename__ = 'sunday_titles'
+    title = sa.Column(sa.String(150), nullable=False)
+    date = sa.Column(sa.Date(), nullable=False)
+
+    def __repr__(self):
+        return '<date: {}, title: {}>'.format(self.date, self.title)
