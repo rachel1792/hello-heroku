@@ -4,9 +4,6 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
-from app import db
-from models import Xwords, SundayTitles
-
 
 def extract():
     formatted_date = date.strftime(date.today(), '%m/%d/%Y')
@@ -54,6 +51,8 @@ def transform(response):
 
 
 def load(content):
+    from models import Xwords, SundayTitles
+    from app import db
     title = content['title']
     across_clues = content['across_clues']
     across_answers = content['across_answers']

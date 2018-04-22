@@ -2,7 +2,9 @@ from flask import url_for
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 
-from app import app, db
+from app import app
+from xword.lib.database import db
+
 
 migrate = Migrate(app, db)
 manager = Manager(app)

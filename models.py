@@ -4,8 +4,8 @@ from uuid import uuid4
 
 from app import db
 
-# TODO: Add updated at column
 
+# TODO: Add across/down orientation and clue number.
 
 class Xwords(db.Model):
     __tablename__ = 'xwords'
@@ -27,6 +27,13 @@ class Xwords(db.Model):
 
 class SundayTitles(db.Model):
     __tablename__ = 'sunday_titles'
+    id = sa.Column(UUID, default=lambda: uuid4().hex, primary_key=True)
+    created_at = sa.Column(
+        sa.TIMESTAMP(timezone=True),
+        server_default=sa.func.now(),
+        default=sa.func.now(),
+        nullable=False
+    )
     title = sa.Column(sa.String(150), nullable=False)
     date = sa.Column(sa.Date(), nullable=False)
 

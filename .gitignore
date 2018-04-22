@@ -3,4 +3,4 @@
 *.pyc
 venv/*
 env/*
-airflow_home/logs/*
+xword-app/logs/*
