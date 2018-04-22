@@ -70,6 +70,7 @@ PyYAML==3.12
 redis==2.10.6
 requests==2.18.4
 rq==0.10.0
+rq-scheduler==0.8.2
 setproctitle==1.1.10
 six==1.11.0
 smmap2==2.0.3
