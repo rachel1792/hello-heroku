@@ -1,5 +1,4 @@
-from app import app
-from flask import render_template, request
+from flask import render_template, request, Blueprint
 from rq import Queue
 from rq.job import Job
 from worker import conn
@@ -8,8 +7,12 @@ from xword.lib.xword_etl import extract
 
 q = Queue(connection=conn)
 
+# TODO: rename simple page
 
-@app.route('/', methods=['GET'])
+simple_page = Blueprint('simple_page', __name__, template_folder='templates')
+
+
+@simple_page.route('/', methods=['GET'])
 def index():
     results = {}
     if request.method == "GET":
@@ -21,7 +24,7 @@ def index():
     return render_template('index.html', results=results)
 
 
-@app.route("/results/<job_key>", methods=['GET'])
+@simple_page.route("/results/<job_key>", methods=['GET'])
 def get_results(job_key):
 
     job = Job.fetch(job_key, connection=conn)

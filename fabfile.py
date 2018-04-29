@@ -18,7 +18,12 @@ def _set_current_environment(env):
 
     print('setting xword config to {}'.format(fab_env['environment']))
     os.environ['CONFIG_ENV'] = './config/{}.yaml'.format(fab_env['environment'])
+    local('export APP_SETTINGS="config.DevelopmentConfig"')
+    local('export DATABASE_URL="postgresql://rachelkogan@localhost:5432/template1"')
+    # TODO: Make the path work generically
+    local('export PYTHONPATH="/Users/rachelkogan/xword-app"')
 
+    # TODO: DELETE?
     print('clear local GCE cache')
     local('rm -f ~/.gcetools/instances')
 
