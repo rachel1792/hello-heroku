@@ -90,3 +90,9 @@ def verify(content):
     else:
         # convert unicode to str
         return content.encode('ascii', 'ignore')
+
+
+def etl():
+    response = extract()
+    content = transform(response)
+    load(content)

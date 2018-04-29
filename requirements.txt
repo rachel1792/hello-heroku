@@ -1,4 +1,5 @@
 alembic==0.9.9
+APScheduler==3.5.1
 asn1crypto==0.24.0
 attrs==17.4.0
 autoenv==1.0.0
@@ -30,6 +31,7 @@ flask-swagger==0.2.13
 Flask-WTF==0.14
 funcsigs==1.0.0
 future==0.16.0
+futures==3.2.0
 gitdb2==2.0.3
 GitPython==2.1.9
 gunicorn==19.4.5
@@ -70,13 +72,13 @@ PyYAML==3.12
 redis==2.10.6
 requests==2.18.4
 rq==0.10.0
-rq-scheduler==0.8.2
 setproctitle==1.1.10
 six==1.11.0
 smmap2==2.0.3
 SQLAlchemy==1.2.6
 tabulate==0.7.7
 thrift==0.9.3
+tzlocal==1.5.1
 Unidecode==1.0.22
 urllib3==1.22
 webencodings==0.5.1
