@@ -112,48 +112,48 @@ def bootstrap_database(force=False, circleci=False, fixtures=False):
             local(
                 'sudo -u postgres psql -c "CREATE ROLE {} WITH ENCRYPTED PASSWORD \'{}\' '
                 'SUPERUSER CREATEDB CREATEROLE LOGIN;"'.format(
-                    config.get('database.user'),
+                    'rachelkogan',
                     config.get('database.password')
                 )
             )
             local(
                 'sudo -u postgres dropdb {} --if-exists'.format(
-                    config.get('database.name'),
+                    'xword_dev',
                 )
             )
             res = local(
                 'sudo -u postgres createdb -w -E UTF8 -O {}  {}'.format(
-                    config.get('database.user'),
-                    config.get('database.name')
+                    'rachelkogan',
+                    'xword_dev'
                 )
             )
         else:
             local(
                 'psql -h {} -p {} -c "CREATE ROLE {} WITH ENCRYPTED PASSWORD \'{}\' '
                 'SUPERUSER CREATEDB CREATEROLE LOGIN;"'.format(
-                    config.get('database.host'),
-                    config.get('database.port'),
-                    config.get('database.user'),
+                    'localhost',
+                    5432,
+                    'rachelkogan',
                     config.get('database.password'),
                 )
             )
             # Drop the existing database if it exists
             local(
                 'dropdb -U {} -h {} -p {} -w {} --if-exists'.format(
-                    config.get('database.user'),
-                    config.get('database.host'),
-                    config.get('database.port'),
-                    config.get('database.name'),
+                    'rachelkogan',
+                    'localhost',
+                    5432,
+                    'xword_test',
                 )
             )
             # Create the database
             res = local(
                 'createdb -h {} -p {} -U {} -w -E UTF8 -O {} {}'.format(
-                    config.get('database.host'),
-                    config.get('database.port'),
-                    config.get('database.user'),
-                    config.get('database.user'),
-                    config.get('database.name'),
+                    'localhost',
+                    5432,
+                    'rachelkogan',
+                    'rachelkogan',
+                    'xword_test',
                 )
             )
         if not res.succeeded:
