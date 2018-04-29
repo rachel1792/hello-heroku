@@ -1,4 +1,4 @@
 #!/bin/bash
-gunicorn app:app --daemon
-python worker.py
-python clock.py
+python worker.py --daemon
+python clock.py --daemon
+gunicorn app:app
