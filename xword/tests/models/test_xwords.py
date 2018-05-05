@@ -3,7 +3,7 @@ from xword.models.xwords import Xwords
 
 class TestXwords(object):
     def test_create_xword(self):
-        """Test that we can create new user."""
+        """Test that we can create new xword entry."""
 
         attrs = dict(
             clue='fake clue',

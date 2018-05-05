@@ -56,7 +56,8 @@ def transform(response):
 
 
 def load(content):
-    from xword.models.xwords import Xwords, SundayTitles
+    from xword.models.xwords import Xwords
+    from xword.models.sunday_titles import SundayTitles
     from app import app, db
     with app.app_context():
         title = content['title']

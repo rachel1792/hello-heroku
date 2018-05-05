@@ -1,7 +1,10 @@
+import datetime
 import pytest
 from freezegun import freeze_time
 
 from xword.lib.xword_etl import extract, transform, load, etl
+from xword.models.xwords import Xwords
+from xword.models.sunday_titles import SundayTitles
 
 
 @pytest.mark.vcr()
@@ -116,10 +119,10 @@ def test_extract_and_transform():
     ]
 
 
-@freeze_time('2018-05-05 01:00:00')
-def test_load_title():
-    content = dict(
-        title='test_title',
+@pytest.fixture()
+def content():
+    return dict(
+        title='',
         across_answers=[],
         across_clues=[],
         down_answers=[],
@@ -127,4 +130,52 @@ def test_load_title():
         debut_words=[],
     )
 
+
+@freeze_time('2018-05-05 01:00:00')
+def test_load_title(content):
+    test_title = 'test_title'
+    content['title'] = test_title
+
     load(content)
+    title_entry = SundayTitles.get_all()[0]
+    assert title_entry.date == datetime.date.today()
+    assert title_entry.title == test_title
+
+
+@freeze_time('2018-05-05 01:00:00')
+def test_load_clues_and_answers(content):
+    test_clue = 'test_clue'
+    test_answer = 'test_answer'
+    content['across_answers'].append('{}_across'.format(test_answer))
+    content['down_answers'].append('{}_down'.format(test_answer))
+    content['across_clues'].append('{}_across'.format(test_clue))
+    content['down_clues'].append('{}_down'.format(test_clue))
+
+    load(content)
+    across_entry = Xwords.query.filter(Xwords.orientation == 'across').first()
+    down_entry = Xwords.query.filter(Xwords.orientation == 'down').first()
+
+    assert across_entry.clue == '{}_across'.format(test_clue)
+    assert across_entry.answer == '{}_across'.format(test_answer)
+
+    assert down_entry.clue == '{}_down'.format(test_clue)
+    assert down_entry.answer == '{}_down'.format(test_answer)
+
+    assert SundayTitles.get_all()[:] == []
+
+
+@freeze_time('2018-05-05 01:00:00')
+def test_load_debut_words(content):
+    # TODO: Write me.
+    debut_answer = 'debut_answer'
+    non_debut_answer = 'non_debut_answer'
+    test_clue = 'test_clue'
+    content['debut_words'].append(debut_answer)
+    content['across_answers'].extend([debut_answer, non_debut_answer])
+    content['across_clues'].extend([test_clue] * 2)
+
+    for entry in Xwords.get_all():
+        if entry.answer == debut_answer:
+            assert entry.debut
+        else:
+            assert not entry.debut

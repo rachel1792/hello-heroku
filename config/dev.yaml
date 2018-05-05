@@ -1,0 +1,17 @@
+---
+debug: True
+production: False
+name: dev
+
+port: 5000
+
+database:
+  user: rachelkogan
+  password:
+  host: localhost
+  port: 5432
+  name: template1
+
+logs:
+  folder_path: /var/log/xword/
+  file_name: xword.log
