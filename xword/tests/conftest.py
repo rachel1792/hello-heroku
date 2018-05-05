@@ -71,9 +71,10 @@ def url_prefix():
 
 @pytest.mark.usefixtures('user')
 @pytest.fixture(scope='function', autouse=True)
-def token(user):
+def token():
     """Generate an authentication token for the Domio user."""
-    return auth.generate_token(user)
+    # return auth.generate_token(user)
+    return ''
 
 
 @pytest.fixture(scope='function', autouse=True)

@@ -99,66 +99,66 @@ def shell():
     local("python manage.py shell")
 
 
-@task()
-def bootstrap_database(force=False, circleci=False, fixtures=False):
-    """Bootstrap the database."""
-
-    if fab_env['environment'] == 'prod' and not force:
-        raise ValueError('Bootstrapping the production database is not allowed.')
-
-    with settings(warn_only=True):
-        # Create a new role
-        if circleci:
-            local(
-                'sudo -u postgres psql -c "CREATE ROLE {} WITH ENCRYPTED PASSWORD \'{}\' '
-                'SUPERUSER CREATEDB CREATEROLE LOGIN;"'.format(
-                    'rachelkogan',
-                    config.get('database.password')
-                )
-            )
-            local(
-                'sudo -u postgres dropdb {} --if-exists'.format(
-                    'xword_dev',
-                )
-            )
-            res = local(
-                'sudo -u postgres createdb -w -E UTF8 -O {}  {}'.format(
-                    'rachelkogan',
-                    'xword_dev'
-                )
-            )
-        else:
-            local(
-                'psql -h {} -p {} -c "CREATE ROLE {} WITH ENCRYPTED PASSWORD \'{}\' '
-                'SUPERUSER CREATEDB CREATEROLE LOGIN;"'.format(
-                    'localhost',
-                    5432,
-                    'rachelkogan',
-                    config.get('database.password'),
-                )
-            )
-            # Drop the existing database if it exists
-            local(
-                'dropdb -U {} -h {} -p {} -w {} --if-exists'.format(
-                    'rachelkogan',
-                    'localhost',
-                    5432,
-                    'xword_test',
-                )
-            )
-            # Create the database
-            res = local(
-                'createdb -h {} -p {} -U {} -w -E UTF8 -O {} {}'.format(
-                    'localhost',
-                    5432,
-                    'rachelkogan',
-                    'rachelkogan',
-                    'xword_test',
-                )
-            )
-        if not res.succeeded:
-            print red('Failed to bootstrap the database.')
-            return
-
-        # Migrate tables
-        migrate('upgrade head')
+# @task()
+# def bootstrap_database(force=False, circleci=False, fixtures=False):
+#     """Bootstrap the database."""
+#
+#     if fab_env['environment'] == 'prod' and not force:
+#         raise ValueError('Bootstrapping the production database is not allowed.')
+#
+#     with settings(warn_only=True):
+#         # Create a new role
+#         if circleci:
+#             local(
+#                 'sudo -u postgres psql -c "CREATE ROLE {} WITH ENCRYPTED PASSWORD \'{}\' '
+#                 'SUPERUSER CREATEDB CREATEROLE LOGIN;"'.format(
+#                     'rachelkogan',
+#                     config.get('database.password')
+#                 )
+#             )
+#             local(
+#                 'sudo -u postgres dropdb {} --if-exists'.format(
+#                     'xword_dev',
+#                 )
+#             )
+#             res = local(
+#                 'sudo -u postgres createdb -w -E UTF8 -O {}  {}'.format(
+#                     'rachelkogan',
+#                     'xword_dev'
+#                 )
+#             )
+#         else:
+#             local(
+#                 'psql -h {} -p {} -c "CREATE ROLE {} WITH ENCRYPTED PASSWORD \'{}\' '
+#                 'SUPERUSER CREATEDB CREATEROLE LOGIN;"'.format(
+#                     'localhost',
+#                     5432,
+#                     'rachelkogan',
+#                     config.get('database.password'),
+#                 )
+#             )
+#             # Drop the existing database if it exists
+#             local(
+#                 'dropdb -U {} -h {} -p {} -w {} --if-exists'.format(
+#                     'rachelkogan',
+#                     'localhost',
+#                     5432,
+#                     'xword_test',
+#                 )
+#             )
+#             # Create the database
+#             res = local(
+#                 'createdb -h {} -p {} -U {} -w -E UTF8 -O {} {}'.format(
+#                     'localhost',
+#                     5432,
+#                     'rachelkogan',
+#                     'rachelkogan',
+#                     'xword_test',
+#                 )
+#             )
+#         if not res.succeeded:
+#             print red('Failed to bootstrap the database.')
+#             return
+#
+#         # Migrate tables
+#         migrate('upgrade head')

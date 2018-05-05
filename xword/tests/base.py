@@ -1,7 +1,9 @@
+import datetime
 import json
-import pytest
 from uuid import uuid4
 from urllib import urlencode
+
+import pytest
 
 
 class ViewTestCaseResponse(object):
@@ -83,10 +85,7 @@ class TestCRUD(TestView):
 
     def _assert_equal(self, expected, result):
         for k in expected:
-            if k == 'phone_number' and expected[k] is not None and result[k] is not None:
-                assert PhoneNumber(expected[k]).e164 == result[k], 'Failed key={}'.format(k)
-            else:
-                assert expected[k] == result[k], 'Failed key={}'.format(k)
+            assert expected[k] == result[k], 'Failed key={}'.format(k)
 
     def _test_post(self, model_factory, url_prefix, client, headers):
         """Test that we can create a new record."""
@@ -130,7 +129,7 @@ class TestCRUD(TestView):
     def _test_get_soft_deleted(self, url_prefix, model_factory, client, headers, **kwargs):
         """Test that we can get a record."""
         record = model_factory()
-        record.deleted_at = standard_datetime.now()
+        record.deleted_at = datetime.datetime.now()
         res = self.get(
             url='/{}/{}'.format(
                 url_prefix,
@@ -161,7 +160,7 @@ class TestCRUD(TestView):
         """Test that we can get a record."""
         records = model_factory.create_batch(size=3)
         for record in records:
-            record.deleted_at = standard_datetime.now()
+            record.deleted_at = datetime.datetime.now()
         res = self.get(
             url='/{}/'.format(url_prefix),
             client=client,

@@ -1,10 +1,9 @@
+import re
 from datetime import date
 
-from sqlalchemy.exc import IntegrityError, ProgrammingError
-
-import re
 import requests
 from bs4 import BeautifulSoup
+from sqlalchemy.exc import IntegrityError, ProgrammingError
 
 
 # TODO: Add tenacity retrying.
@@ -19,7 +18,7 @@ def extract():
 def transform(response):
 
     title = response.h1.text
-    pattern = re.compile('New York Times')
+    # pattern = re.compile('New York Times')
 
     # # TODO: probably condense this
     # if pattern.match(title) is None:
@@ -57,7 +56,7 @@ def transform(response):
 
 
 def load(content):
-    from models import Xwords, SundayTitles
+    from xword.models.xwords import Xwords, SundayTitles
     from app import app, db
     with app.app_context():
         title = content['title']
@@ -70,7 +69,9 @@ def load(content):
         across_objects = []
         for clue, answer in zip(across_clues, across_answers):
             debut = clue in debut_words
-            across_objects.append(Xwords(clue=clue, answer=answer, debut=debut, orientation='across'))
+            across_objects.append(
+                Xwords(clue=clue, answer=answer, debut=debut, orientation='across')
+            )
         db.session.add_all(across_objects)
 
         down_objects = []

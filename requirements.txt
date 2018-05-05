@@ -19,6 +19,7 @@ dill==0.2.7.1
 docutils==0.14
 enum34==1.1.6
 Fabric==1.14.0
+Factory==1.2
 filechunkio==1.8
 flake8==3.5.0
 Flask==0.11.1

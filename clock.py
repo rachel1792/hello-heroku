@@ -16,4 +16,6 @@ q = Queue(connection=conn)
 @sched.cron_schedule(hour=4, minute=0, second=0)
 def xword_etl():
     q.enqueue(etl)
+
+
 sched.start()

@@ -3,6 +3,7 @@ import os
 from flask import Flask
 
 from xword.lib.database import db
+from xword.models import *  # NOQA Import all the models, very important
 from routes import simple_page
 
 
