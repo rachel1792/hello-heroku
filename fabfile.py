@@ -35,26 +35,11 @@ def dev():
     _set_current_environment('dev')
 
 
-def environment():
-    """Bootstrap the environment."""
-    local('mkdir -p logs')
-    print green('\nInstalling requirements')
-    local('pip install -r requirements.txt')
-    # local('python setup.py develop')
-
-
 @task
 def clean():
     """Remove all .pyc files."""
     print green('Clean up .pyc files')
     local("find . -name '*.py[co]' -exec rm -f '{}' ';'")
-
-
-@task
-def lint():
-    """Check for lints"""
-    print green('Checking for lints')
-    return local('flake8').succeeded
 
 
 @task
@@ -107,37 +92,12 @@ def bootstrap_database(force=False):
     from xword.utils.configuration import config
     with settings(warn_only=True):
         # Create a new role
-        # local(
-        #     'psql -h {} -p {} -c "CREATE ROLE {} WITH ENCRYPTED PASSWORD \'{}\' '
-        #     'SUPERUSER CREATEDB CREATEROLE LOGIN;"'.format(
-        #         config.get('database.host'),
-        #         config.get('database.port'),
-        #         config.get('database.user'),
-        #         config.get('database.password'),
-        #     )
-        # )
-        # Drop the existing database if it exists
         local(
-            'dropdb -U {} -h {} -p {} -w {} --if-exists'.format(
-                config.get('database.user'),
-                config.get('database.host'),
-                config.get('database.port'),
-                config.get('database.name'),
-            )
-        )
-        # Create the database
-        res = local(
-            'createdb -h {} -p {} -U {} -w -E UTF8 -O {} {}'.format(
+            'psql -h {} -p {} -c "CREATE ROLE {} WITH ENCRYPTED PASSWORD \'{}\' '
+            'SUPERUSER CREATEDB CREATEROLE LOGIN;"'.format(
                 config.get('database.host'),
                 config.get('database.port'),
                 config.get('database.user'),
-                config.get('database.user'),
-                config.get('database.name'),
+                config.get('database.password'),
             )
         )
-        if not res.succeeded:
-            print red('Failed to bootstrap the database.')
-            return
-
-        # Migrate tables
-        migrate('upgrade head')
