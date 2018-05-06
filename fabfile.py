@@ -58,28 +58,6 @@ def lint():
 
 
 @task
-def run_tests(args=''):
-    fab_env['environment'] = 'test'  # currently, test just forces the test environment.
-    os.environ['CONFIG_ENV'] = './config/%s.yaml' % fab_env['environment']
-    clean()
-    bootstrap_database()
-    migrate('downgrade base')
-    migrate('upgrade head')
-    cmd = ('pytest -pdb {}'.format(args))
-
-    with settings(warn_only=True, quiet=True):
-        success = local(cmd).succeeded
-
-    if success:
-        print green('Tests finished running with success.')
-    else:
-        print red('Test finished running with errors.')
-        sys.exit(1)
-
-    lint()
-
-
-@task
 def db():
     """Connect to the database."""
     from xword.utils.configuration import config
@@ -116,7 +94,6 @@ def serve():
 @task()
 def shell():
     """Run the shell."""
-
     local("python manage.py shell")
 
 

@@ -34,7 +34,7 @@ class Configuration(object):
         if os.environ.get('ENVIRONMENT') == 'production':
             env_path = 'config/production.yaml'
         else:
-            env_path = os.environ.get('CONFIG_ENV') or 'config/development.yaml'
+            env_path = os.environ.get('CONFIG_ENV') or 'config/dev.yaml'
         if not os.path.exists(env_path):
             raise Exception('{0} does not exist'.format(env_path))
 

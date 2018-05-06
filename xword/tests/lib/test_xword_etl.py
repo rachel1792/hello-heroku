@@ -112,11 +112,11 @@ def test_extract_and_transform():
         u'IOTA', u'ETA', u'DAY', u'INC', u'ESA', u'MOM'
     ]
 
-    assert content['debut_words'] == [
+    assert set(content['debut_words']) == {
         u'PUBLICSCHOOLILOVEYOU', u'PHYSICALTHERAPYBOATS', u'POLITICALLYCORRECTLAB',
         u'WATERCLOSETFIELDS', u'ANTEMERIDIEMRADIO', u'HDDVD', u'ADVANCEDPLACEMENTNEWS',
         u'JANEPAULEY', u'HASTOBE'
-    ]
+    }
 
 
 @pytest.fixture()
@@ -166,7 +166,6 @@ def test_load_clues_and_answers(content):
 
 @freeze_time('2018-05-05 01:00:00')
 def test_load_debut_words(content):
-    # TODO: Write me.
     debut_answer = 'debut_answer'
     non_debut_answer = 'non_debut_answer'
     test_clue = 'test_clue'
