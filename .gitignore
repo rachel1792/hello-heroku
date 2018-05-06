@@ -5,3 +5,4 @@
 venv/*
 env/*
 xword-app/logs/*
+dump.rdb

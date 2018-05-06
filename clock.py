@@ -1,4 +1,5 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
+
 from rq import Queue
 from worker import conn
 
@@ -13,7 +14,7 @@ sched = BlockingScheduler()
 q = Queue(connection=conn)
 
 
-@sched.cron_schedule(hour=4, minute=0, second=0)
+@sched.scheduled_job('cron', hour=22, minute=55, second=0)
 def xword_etl():
     q.enqueue(etl)
 
