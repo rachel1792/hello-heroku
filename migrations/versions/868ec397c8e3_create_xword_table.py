@@ -25,6 +25,10 @@ def upgrade():
             'created_at', sa.TIMESTAMP(timezone=True),
             server_default=sa.text(u'now()'), nullable=False
         ),
+        sa.Column('updated_at', sa.TIMESTAMP(timezone=True), nullable=False,
+                  server_onupdate=sa.text('now()'), onupdate=sa.text('now()'),
+                  default=sa.text('now()')),
+        sa.Column('deleted_at', sa.TIMESTAMP(timezone=True)),
         sa.Column('clue', sa.String(length=150), nullable=False),
         sa.Column('answer', sa.String(length=30), nullable=False),
         sa.Column('debut', sa.Boolean(), server_default=sa.text(u'false'), nullable=True),
@@ -39,6 +43,10 @@ def upgrade():
             'created_at', sa.TIMESTAMP(timezone=True),
             server_default=sa.text(u'now()'), nullable=False
         ),
+        sa.Column('updated_at', sa.TIMESTAMP(timezone=True), nullable=False,
+                  server_onupdate=sa.text('now()'), onupdate=sa.text('now()'),
+                  default=sa.text('now()')),
+        sa.Column('deleted_at', sa.TIMESTAMP(timezone=True)),
         sa.Column('title', sa.String(length=150), nullable=False),
         sa.Column('date', sa.Date(), nullable=False),
         sa.PrimaryKeyConstraint('id')

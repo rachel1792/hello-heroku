@@ -24,6 +24,7 @@ class Base(db.Model):
         default=db.func.now(),
         nullable=False
     )
+    deleted_at = sa.Column(sa.TIMESTAMP(timezone=True))
     updated_at = sa.Column(
         sa.TIMESTAMP(timezone=True),
         server_onupdate=db.func.now(),

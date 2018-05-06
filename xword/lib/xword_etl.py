@@ -5,13 +5,20 @@ import requests
 from bs4 import BeautifulSoup
 from sqlalchemy.exc import IntegrityError, ProgrammingError
 
+from xword.utils.loggers import get_logger
+
+
+logger = get_logger(__name__)
+
 
 # TODO: Add tenacity retrying.
 
 def extract():
     formatted_date = date.strftime(date.today(), '%m/%d/%Y')
+    logger.info('Preparing to scrape xword data on {}'.format(formatted_date))
     response = requests.get('https://www.xwordinfo.com/Crossword?date={}'.format(formatted_date))
     soup = BeautifulSoup(response.content, 'html.parser')
+    logger.info('Finished scraping xword data on {}'.format(formatted_date))
     return soup
 
 
@@ -44,6 +51,8 @@ def transform(response):
     debut_words = [item.text for item in response.find_all('span', 'debut')]
 
     debut_words = filter(lambda x: x.upper() == x, set(unique_words).union(set(debut_words)))
+
+    logger.info('Finished parsing xword data.')
 
     return dict(
         title=title,
@@ -84,6 +93,7 @@ def load(content):
         if title:
             today = date.today()
             db.session.add(SundayTitles(title=title, date=today))
+            logger.info('Finished loading Sunday Title: {}.'.format(title))
 
         try:
             db.session.commit()

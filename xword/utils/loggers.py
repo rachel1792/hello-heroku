@@ -1,3 +1,4 @@
+import sys
 import logging
 import logging.handlers
 
@@ -15,16 +16,15 @@ def get_logger(name, log_level=None):
         log.propagate = 0
         log.setLevel(log_level)
 
-        handler = logging.handlers.TimedRotatingFileHandler(
-            '{}{}'.format(
-                '/var/log/xword-app/', 'xword.log'
-            ),
-            when='midnight',
-            backupCount=MAX_OLD_LOG_FILES
-        )
+        # handler = logging.handlers.TimedRotatingFileHandler(
+        #     '{}{}'.format(
+        #         '/var/log/xword-app/', 'xword.log'
+        #     ),
+        #     when='midnight',
+        #     backupCount=MAX_OLD_LOG_FILES
+        # )
 
-        # Use this in prod.
-        # handler = logging.StreamHandler(sys.stdout)
+        handler = logging.StreamHandler(sys.stdout)
 
         handler.setFormatter(_create_formatter())
         log.addHandler(handler)
