@@ -84,26 +84,17 @@ class Base(db.Model):
 
     def save(self):
         """Save to the database."""
-        self.add_to_session()
-        self.commit_session()
+        db.session.add(self)
+        db.session.commit()
         return self
 
     @classmethod
-    def commit_session(cls):
-        """Updates the database records."""
-        return db.session.commit()
-
-    def add_to_session(self):
-        """Add resource to the session without committing."""
-        db.session.add(self)
-        return self
-
-    def delete(self, resource, soft_delete=True):
+    def delete(cls, resource, soft_delete=True):
         """Delete a resource."""
         # Soft delete the resource by updating the deleted_at field.
         if soft_delete:
             resource.deleted_at = datetime.now()
-            return self.commit_session()
+            return db.session.commit()
         # Otherwise, permanently delete a resource.
         db.session.delete(resource)
         return db.session.commit()
@@ -177,8 +168,3 @@ class Base(db.Model):
             previous_contents.pop(key, None)
         previous_contents.pop('id', None)
         return self.__class__(**previous_contents)
-
-    def flush(self):
-        """Flush to the database. Does not commit."""
-        db.session.flush()
-        return self
