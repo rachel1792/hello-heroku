@@ -10,7 +10,7 @@ from xword.lib.xword_etl import etl
 q = Queue(connection=conn)
 
 
-@sched.scheduled_job('cron', hour=23, minute=15, second=0)
+@sched.scheduled_job('cron', hour=6, minute=00, second=0)
 def xword_etl():
     q.enqueue(etl)
 
