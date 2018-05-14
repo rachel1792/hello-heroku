@@ -2,7 +2,6 @@ import os
 
 import pytest
 
-from xword.utils import auth
 from app import app as _app
 from app import db as _db
 
