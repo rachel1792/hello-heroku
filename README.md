@@ -1,5 +1,6 @@
-# hello-heroku
-trying out heroku
+# hello-heroku  
+[![codecov](https://codecov.io/gh/rachel1792/hello-heroku/branch/master/graph/badge.svg?token=esocPKFFLd)](https://codecov.io/gh/rachel1792/hello-heroku)  
+trying out heroku  
 
 ## Helpful Commands
 * heroku pg:psql --app xword-dev
