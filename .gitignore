@@ -6,3 +6,6 @@ venv/*
 env/*
 xword-app/logs/*
 dump.rdb
+.coverage
+coverage.xml
+test-reports/*

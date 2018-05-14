@@ -15,5 +15,8 @@ class TestSundayTitles(object):
         title_entry = SundayTitles(**attrs)
         title_entry.save()
         res = SundayTitles.get(title_entry.id)
+
+        assert res.__repr__() == '<date: {}, title: {}>'.format(attrs['date'], attrs['title'])
+
         for attr in attrs:
             assert getattr(res, attr) == attrs[attr]

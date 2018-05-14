@@ -15,5 +15,8 @@ class TestXwords(object):
         xword_entry = Xwords(**attrs)
         xword_entry.save()
         res = Xwords.get(xword_entry.id)
+
+        assert res.__repr__() == '<clue: {}, answer: {}>'.format(attrs['clue'], attrs['answer'])
+
         for attr in attrs:
             assert getattr(res, attr) == attrs[attr]

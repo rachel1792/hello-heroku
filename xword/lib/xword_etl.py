@@ -102,19 +102,6 @@ def load(content):
             raise
 
 
-def verify(content):
-    if isinstance(content, list):
-        if len(content) > 0:
-            content = content[0]
-            # convert unicode to str
-            return content.encode('ascii', 'ignore')
-        else:
-            return ""
-    else:
-        # convert unicode to str
-        return content.encode('ascii', 'ignore')
-
-
 def etl():
     response = extract()
     content = transform(response)
