@@ -1,5 +1,5 @@
 # hello-heroku
-trying out heroku
+trying out heroku  
 [![codecov](https://codecov.io/gh/rachel1792/hello-heroku/branch/master/graph/badge.svg?token=esocPKFFLd)](https://codecov.io/gh/rachel1792/hello-heroku)
 
 ## Helpful Commands
