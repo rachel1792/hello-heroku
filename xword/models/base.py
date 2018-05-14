@@ -54,7 +54,7 @@ class Base(db.Model):
     @classmethod
     def private_fields(cls):
         """Fields that should be private and never exposed."""
-        return 'created_at', 'updated_at', 'deleted_at', 'password'
+        return 'created_at', 'updated_at', 'deleted_at'
 
     @classmethod
     def relationships(cls, key_delim='.'):
@@ -66,12 +66,6 @@ class Base(db.Model):
         """Get all model columns."""
         return [prop.key for prop in class_mapper(cls).iterate_properties
                 if isinstance(prop, ColumnProperty)]
-
-    @classmethod
-    def store(cls, resource):
-        """Save to the database."""
-        cls.add_to_session(resource)
-        db.session.commit()
 
     def to_dict(self):
         """Returns a dict from a record."""
@@ -149,15 +143,6 @@ class Base(db.Model):
         ).first()
 
     @classmethod
-    def get_only_deleted(cls, record_id):
-        """Get a record that has been soft deleted."""
-        return cls.query.filter(
-            cls.id == record_id
-        ).filter(
-            cls.deleted_at.isnot(None)
-        ).first()
-
-    @classmethod
     def get_or_initialize_by(cls, **kwargs):
         """Get a record by the arguments or initialize a new record in memory."""
         return cls.query.filter(
@@ -180,7 +165,7 @@ class Base(db.Model):
         fields = self.remove_extra_keys(**fields)
         for col in fields.keys():
             setattr(self, col, fields[col])
-        self.save()
+        return self.save()
 
     def safe_update(self, **fields):
         """Update the record with passed in fields, ignoring any private fields and 'id'. This
@@ -191,6 +176,7 @@ class Base(db.Model):
         fields = self.remove_extra_keys(**fields)
         for col in fields.keys():
             setattr(self, col, fields[col])
+        return self
 
     def clone(self):
         """Return a new model instance with the same contents, except for private fields and
