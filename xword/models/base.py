@@ -89,15 +89,6 @@ class Base(db.Model):
         return self
 
     @classmethod
-    def bulk_save(cls, resources):
-        """Bulk save many resources."""
-        for resource in resources:
-            resource.add_to_session()
-        cls.commit_session()
-
-        return resources
-
-    @classmethod
     def commit_session(cls):
         """Updates the database records."""
         return db.session.commit()
