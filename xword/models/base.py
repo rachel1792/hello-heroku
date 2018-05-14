@@ -158,15 +158,6 @@ class Base(db.Model):
         ).first()
 
     @classmethod
-    def get_by_email(cls, record_email):
-        """Get a record."""
-        return cls.query.filter(
-            cls.email == record_email
-        ).filter(
-            cls.deleted_at.is_(None)
-        ).first()
-
-    @classmethod
     def get_or_initialize_by(cls, **kwargs):
         """Get a record by the arguments or initialize a new record in memory."""
         return cls.query.filter(
