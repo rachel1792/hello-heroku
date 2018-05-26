@@ -10,7 +10,7 @@ logger = get_logger(__name__)
 q = Queue(connection=conn)
 
 
-@sched.scheduled_job('cron', hour=23, minute=55, second=0)
+@sched.scheduled_job('cron', hour=4, minute=0, second=0)
 def xword_etl():
     logger.info('Queueing xword ETL task.')
     q.enqueue(etl)
