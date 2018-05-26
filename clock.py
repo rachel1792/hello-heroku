@@ -1,3 +1,4 @@
+import logging
 from rq import Queue
 from worker import conn
 
@@ -5,7 +6,10 @@ from xword.lib.database import sched
 from xword.lib.xword_etl import etl
 from xword.utils.loggers import get_logger
 
-logger = get_logger(__name__)
+logging.basicConfig()
+logging.getLogger('apscheduler').setLevel(logging.DEBUG)
+
+logger = get_logger(__name__, log_level=logging.DEBUG)
 
 q = Queue(connection=conn)
 
@@ -18,7 +22,7 @@ def xword_etl():
 
 @sched.scheduled_job('interval', minutes=3)
 def timed_job():
-    print('This job is run every three minutes.')
+    logger.info('This job is run every three minutes.')
 
 
 logger.info('Running clock.py')
