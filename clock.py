@@ -10,10 +10,15 @@ logger = get_logger(__name__)
 q = Queue(connection=conn)
 
 
-@sched.scheduled_job('cron', hour=16, minute=00, second=0)
+@sched.scheduled_job('cron', hour=23, minute=55, second=0)
 def xword_etl():
     logger.info('Queueing xword ETL task.')
     q.enqueue(etl)
+
+
+@sched.scheduled_job('interval', minutes=3)
+def timed_job():
+    print('This job is run every three minutes.')
 
 
 logger.info('Running clock.py')
