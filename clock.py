@@ -20,10 +20,5 @@ def xword_etl():
     q.enqueue(etl)
 
 
-@sched.scheduled_job('interval', minutes=3)
-def timed_job():
-    logger.info('This job is run every three minutes.')
-
-
 logger.info('Running clock.py')
 sched.start()
