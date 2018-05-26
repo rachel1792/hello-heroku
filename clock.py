@@ -16,4 +16,5 @@ def xword_etl():
     q.enqueue(etl)
 
 
+logger.info('Running clock.py')
 sched.start()
