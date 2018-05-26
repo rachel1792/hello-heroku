@@ -11,3 +11,6 @@ trying out heroku
 * heroku config:set ENCRYPTION_KEY=my_secret_launch_codes
 * heroku run bash
 * heroku addons:create heroku-redis:hobby-dev
+
+## TODO
+* deal with constants and config values better.
