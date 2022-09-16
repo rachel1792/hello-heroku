@@ -47,7 +47,7 @@ Jinja2==2.8.1
 lockfile==0.12.2
 logging==0.4.9.6
 lxml==3.8.0
-Mako==1.0.7
+Mako==1.2.2
 Markdown==2.6.11
 MarkupSafe==1.0
 mccabe==0.6.1
